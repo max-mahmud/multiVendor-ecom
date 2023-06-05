@@ -2,6 +2,8 @@ const adminModel = require("../models/adminModel");
 const sellerModel = require("../models/sellerModel");
 const bcrpty = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cloudinary = require("cloudinary").v2
+const formidable = require('formidable')
 const { responseReturn } = require("../utils/response");
 const { createToken } = require("../utils/tokenCreate");
 const sellerCustomerModel = require("../models/chat/sellerCustomerModel");
@@ -54,7 +56,7 @@ class authControllers {
                 res.cookie('accessToken', token, {
                     expires: new Date(Date.now() + 7 * 60 * 60 * 24 * 1000),
                 });
-                responseReturn(res, 201, {token, message: "registered successfully" })
+                responseReturn(res, 201, { token, message: "registered successfully" })
             }
         } catch (error) {
             responseReturn(res, 500, { error: "Internal Server Error" })
@@ -87,13 +89,13 @@ class authControllers {
         }
     }
 
-    logout=async(req, res, next) => {
+    logout = async (req, res, next) => {
         res.cookie("token", null, {
             expires: new Date(Date.now()),
             httpOnly: true,
         });
 
-        responseReturn(res,200,{message: 'logout success'})
+        responseReturn(res, 200, { message: 'logout success' })
     }
 
     getUser = async (req, res, next) => {
@@ -111,6 +113,35 @@ class authControllers {
         }
     }
 
+    profile_image_upload = async (req, res) => {
+        const { id } = req
+        const form = formidable({ multiples: true })
+
+        form.parse(req, async (err, _, files) => {
+            cloudinary.config({
+                cloud_name: process.env.cloud_name,
+                api_key: process.env.api_key,
+                api_secret: process.env.api_secret,
+                secure: true
+            })
+            const { image } = files
+            try {
+                const result = await cloudinary.uploader.upload(image.filepath, { folder: 'profile' })
+                if (result) {
+                    await sellerModel.findByIdAndUpdate(id, {
+                        image: result.url
+                    })
+                    const userInfo = await sellerModel.findById(id)
+                    responseReturn(res, 201, { message: 'Profile image update success',userInfo })
+                } else {
+                    responseReturn(res, 404, { error: 'image upload failed' })
+                }
+            } catch (error) {
+                console.log(error)
+                responseReturn(res, 500, { error: error.message })
+            }
+        })
+    }
 }
 
 module.exports = new authControllers();

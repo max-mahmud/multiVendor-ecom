@@ -142,6 +142,7 @@ class productController {
                     responseReturn(res, 404, { error: error.message })
                 }
             }
-        })}
+        })
+    }
 }
 module.exports = new productController()

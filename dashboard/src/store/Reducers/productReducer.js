@@ -5,9 +5,7 @@ export const add_product = createAsyncThunk(
     'product/add_product',
     async (product, { rejectWithValue, fulfillWithValue }) => {
         try {
-
             const { data } = await api.post('/product-add', product, { withCredentials: true })
-            console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -19,7 +17,6 @@ export const update_product = createAsyncThunk(
     'product/update_product',
     async (product, { rejectWithValue, fulfillWithValue }) => {
         try {
-
             const { data } = await api.post('/product-update', product, { withCredentials: true })
             return fulfillWithValue(data)
         } catch (error) {
@@ -38,9 +35,6 @@ export const product_image_update = createAsyncThunk(
             formData.append('productId', productId)
             const { data } = await api.post('/product-image-update', formData, { withCredentials: true })
             return fulfillWithValue(data)
-            
-            console.log(data)
-
         } catch (error) {
             return rejectWithValue(error.response.data)
         }
