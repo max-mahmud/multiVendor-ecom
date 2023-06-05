@@ -1,28 +1,49 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FcAddImage } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
-import { BounceLoader } from "react-spinners"
+import { BeatLoader, BounceLoader } from "react-spinners"
 import { useDispatch, useSelector } from 'react-redux';
-import { profile_image_upload } from '../../store/Reducers/authReducer';
+import { profile_image_upload, profile_info_add } from '../../store/Reducers/authReducer';
 import { toast } from 'react-hot-toast';
+import { override } from '../../utils/utils';
 
 const Profile = () => {
+    const [state, setState] = useState({
+        division: '',
+        district: '',
+        shopName: '',
+        sub_district: ''
+    })
+
     const dispatch = useDispatch()
-    const { userInfo, loader, successMessage } = useSelector(state => state.auth)
+    const { userInfo, loader, successMessage,  } = useSelector(state => state.auth)
 
     const add_image = (e) => {
-        if(e.target.files.length > 0) {
+        if (e.target.files.length > 0) {
             const formData = new FormData()
             formData.append('image', e.target.files[0])
             dispatch(profile_image_upload(formData))
         }
     }
 
-    useEffect(()=>{
-        if(successMessage){
+    useEffect(() => {
+        if (successMessage) {
             toast.success(successMessage)
         }
-    },[successMessage])
+    }, [successMessage])
+
+    const addInfo = (e) => {
+        e.preventDefault()
+        dispatch(profile_info_add(state))
+    }
+
+    const inputHandle = (e) => {
+        setState({
+            ...state,
+            [e.target.name]: e.target.value
+        })
+    }
+
 
     return (
         <div className='px-2 lg:px-7 py-5'>
@@ -80,7 +101,7 @@ const Profile = () => {
                                         {
                                             userInfo.payment === 'active' ? <span className='bg-blue-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded '>
                                                 click active
-                                            </span> :<span className='bg-red-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded '>{userInfo.payment}</span>
+                                            </span> : <span className='bg-red-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded '>{userInfo.payment}</span>
                                         }
                                     </p>
                                 </div>
@@ -88,43 +109,46 @@ const Profile = () => {
                         </div>
                         <div className='px-0 md:px-5 py-2'>
                             {
-                                !userInfo.shopInfo ? <form >
+                                !userInfo.shopInfo ? <form onSubmit={addInfo}>
                                     <div className='flex flex-col w-full gap-1 mb-3'>
                                         <label htmlFor="Shop">Shop Name</label>
-                                        <input className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='shop name' name='shopName' id='Shop' />
+                                        <input value={state.shopName} onChange={inputHandle} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='shop name' name='shopName' id='Shop' />
                                     </div>
                                     <div className='flex flex-col w-full gap-1'>
                                         <label htmlFor="div">Division</label>
-                                        <input className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='division' name='division' id='div' />
+                                        <input value={state.division} onChange={inputHandle} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='division' name='division' id='div' />
                                     </div>
                                     <div className='flex flex-col w-full gap-1 mb-3'>
                                         <label htmlFor="district">District</label>
-                                        <input className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='district' name='district' id='district' />
+                                        <input value={state.district} onChange={inputHandle} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='district' name='district' id='district' />
                                     </div>
                                     <div className='flex flex-col w-full gap-1 mb-3'>
                                         <label htmlFor="sub">Sub District</label>
-                                        <input className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='sub district' name='sub_district' id='sub' />
+                                        <input value={state.sub_district} onChange={inputHandle} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#283046] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" placeholder='sub district' name='sub_district' id='sub' />
                                     </div>
-                                    <button className='bg-blue-500 w-[190px] hover:shadow-blue-500/20 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
-                                        Add
+                                    <button disabled={loader ? true : false} className="bg-indigo-600 font-semibold my-3 py-2 px-8 text-yellow-50 rounded-sm hover:bg-indigo-700 ">
+                                        {
+                                            loader ? <BeatLoader cssOverride={override} color="#fffcfc" /> :
+                                                "Update Info"
+                                        }
                                     </button>
                                 </form> : <div className='flex justify-between text-sm flex-col gap-2 p-4 bg-slate-800 rounded-md relative'>
-                                    <span className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer'><FaEdit /></span>
+                                    <span className='p-[6px] bg-yellow-600 rounded text-[18px] hover:shadow-lg hover:bg-yellow-700 absolute right-2 top-2 cursor-pointer'><FaEdit /></span>
                                     <div className='flex gap-2'>
                                         <span>Shop Name : </span>
-                                        <span>Buma</span>
+                                        <span>{userInfo.shopInfo?.shopName}</span>
                                     </div>
                                     <div className='flex gap-2'>
                                         <span>Division : </span>
-                                        <span>Rajshahi</span>
+                                        <span>{userInfo.shopInfo?.division}</span>
                                     </div>
                                     <div className='flex gap-2'>
                                         <span>District : </span>
-                                        <span>Chapai</span>
+                                        <span>{userInfo.shopInfo?.district}</span>
                                     </div>
                                     <div className='flex gap-2'>
                                         <span>Sub District : </span>
-                                        <span>Chapai</span>
+                                        <span>{userInfo.shopInfo?.sub_district}</span>
                                     </div>
                                 </div>
                             }

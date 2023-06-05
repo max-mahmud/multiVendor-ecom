@@ -11,6 +11,7 @@ router.get("/logout",authMiddleware, authControllers.logout);
 router.post("/seller-login", authControllers.seller_login);
 router.post("/seller-register", authControllers.seller_register);
 router.post("/profile-image-upload",authMiddleware, authControllers.profile_image_upload);
+router.post("/profile-info-add",authMiddleware, authControllers.profile_info_add);
 
 
 module.exports = router;

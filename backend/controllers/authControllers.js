@@ -132,7 +132,7 @@ class authControllers {
                         image: result.url
                     })
                     const userInfo = await sellerModel.findById(id)
-                    responseReturn(res, 201, { message: 'Profile image update success',userInfo })
+                    responseReturn(res, 201, { message: 'Profile image update success', userInfo })
                 } else {
                     responseReturn(res, 404, { error: 'image upload failed' })
                 }
@@ -141,6 +141,25 @@ class authControllers {
                 responseReturn(res, 500, { error: error.message })
             }
         })
+    }
+
+    profile_info_add = async (req, res, next) => {
+        const { division, district, shopName, sub_district } = req.body;
+        const { id } = req;
+        try {
+            await sellerModel.findByIdAndUpdate(id, {
+                shopInfo: {
+                    shopName,
+                    division,
+                    district,
+                    sub_district
+                }
+            })
+            const userInfo = await sellerModel.findById(id)
+            responseReturn(res, 201, { message: 'Profile info add success', userInfo })
+        } catch (error) {
+            responseReturn(res, 500, { error: error.message })
+        }
     }
 }
 

@@ -79,6 +79,19 @@ export const profile_image_upload = createAsyncThunk(
     }
 )
 
+export const profile_info_add = createAsyncThunk(
+    'auth/profile_info_add',
+    async (info, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.post('/profile-info-add', info, { withCredentials: true })
+            localStorage.removeItem('accessToken', data.token)
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
 const returnRole = (token) => {
     if (token) {
         const decodeToken = jwt(token)
@@ -166,7 +179,14 @@ export const authReducer = createSlice({
             state.userInfo = payload.userInfo
             state.successMessage = payload.message
         },
-
+        [profile_info_add.pending]: (state, _) => {
+            state.loader = true
+        },
+        [profile_info_add.fulfilled]: (state, { payload }) => {
+            state.loader = false
+            state.userInfo = payload.userInfo
+            state.successMessage = payload.message
+        },
     }
 
 })
