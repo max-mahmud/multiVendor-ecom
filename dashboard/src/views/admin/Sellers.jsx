@@ -5,7 +5,7 @@ import { FiEye } from "react-icons/fi";
 const Sellers = () => {
     const [currentPage, setCurrentPage] = useState(1);
     // const [searchValue, setSearchValue] = useState("");
-    const [parPage, setparPage] = useState(5);
+    const [parPage, setParPage] = useState(5);
     // const [show, setShow] = useState(false);
 
     return (
@@ -13,7 +13,7 @@ const Sellers = () => {
             <div className="w-full bg-[#283046] p-4 rounded-md">
                 <div className="flex justify-between items-center">
                     <select
-                        onChange={(e) => setparPage(parseInt(e.target.value))}
+                        onChange={(e) => setParPage(parseInt(e.target.value))}
                         className="bg-[#283046] border border-slate-700 px-4 py-2 rounded-md focus:outline-none focus:border-indigo-600 text-[#d0d2d6]"
                     >
                         <option value="5">5</option>

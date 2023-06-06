@@ -17,7 +17,7 @@ const Category = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
-    const [parPage, setparPage] = useState(5);
+    const [parPage, setParPage] = useState(5);
     const [show, setShow] = useState(false);
     const [imageShow, setImageShow] = useState('');
 
@@ -77,7 +77,7 @@ const Category = () => {
             <div className="w-full flex flex-wrap">
                 <div className="w-full lg:w-7/12">
                     <div className="w-full bg-[#283046] p-4 rounded-md">
-                        <Search setparPage={setparPage} setSearchValue={setSearchValue} searchValue={searchValue} />
+                        <Search setParPage={setParPage} setSearchValue={setSearchValue} searchValue={searchValue} />
                         <div className="relative overflow-x-auto">
                             <table className="text-sm w-full text-left text-[#d0d2d6]">
                                 <thead className="border-b border-slate-700 text-sm uppercase">

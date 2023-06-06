@@ -1,12 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { get_seller, messageClear, seller_status_update } from './../../store/Reducers/sellerReducer';
+import { toast } from 'react-hot-toast';
 
 const SellerDetails = () => {
+    const { sellerId } = useParams()
+    const dispatch = useDispatch()
+    const { seller, successMessage } = useSelector(state => state.seller)
+
+    useEffect(() => {
+        dispatch(get_seller(sellerId))
+    }, [sellerId])
+
+    const [status, setStatus] = useState()
+
+    const statusSubmit = (e) => {
+        e.preventDefault()
+        dispatch(seller_status_update({sellerId, status}))
+    }
+
+    useEffect(()=>{
+        if(successMessage){
+            toast.success(successMessage)
+            dispatch(messageClear())
+        }
+    },[successMessage])
+
+    useEffect(()=>{
+        if(seller){
+            setStatus(seller.status)
+        }
+    },[seller])
     return (
         <div className='px-2 lg:px-7 pt-5'>
             <div className="w-full bg-[#283046] p-4 rounded-md">
                 <div className="flex flex-wrap w-full text-[#d0d2d6]">
-                    <div className="lg:w-3/12">
-                        <img className='w-full h-[230px] object-cover' src="/images/admin.jpg" alt="img" />
+                    <div className="lg:w-3/12 flex justify-center items-center">
+                        {
+                            seller?.image ? <img className='w-full h-[230px] object-cover' src="/images/admin.jpg" alt="img" /> : <span className='text-xl text-yellow-200'>Image not uploaded</span>
+                        }
                     </div>
                     <div className="lg:w-4/12">
                         <div className="py-2 px-4">
@@ -16,23 +49,23 @@ const SellerDetails = () => {
                             <div className="flex justify-between gap-2 p-3 rounded flex-col bg-slate-800">
                                 <div className="flex gap-2">
                                     <span>Name:</span>
-                                    <span>Jakir</span>
+                                    <span>{seller?.name}</span>
                                 </div>
                                 <div className="flex gap-2">
                                     <span>Email:</span>
-                                    <span>Jakir@gmail.com</span>
+                                    <span>{seller?.email}</span>
                                 </div>
                                 <div className="flex gap-2">
                                     <span>Role:</span>
-                                    <span>Seller</span>
+                                    <span>{seller?.role}</span>
                                 </div>
                                 <div className="flex gap-2">
                                     <span>Status:</span>
-                                    <span>Active</span>
+                                    <span>{seller?.status}</span>
                                 </div>
                                 <div className="flex gap-2">
                                     <span>Payment Account:</span>
-                                    <span>Active</span>
+                                    <span>{seller?.payment}</span>
                                 </div>
                             </div>
                         </div>
@@ -45,29 +78,29 @@ const SellerDetails = () => {
                             <div className="flex justify-between gap-2 p-3 rounded flex-col bg-slate-800">
                                 <div className="flex gap-2">
                                     <span>Shop Name:</span>
-                                    <span>Jakir Express</span>
+                                    <span>{seller?.shopInfo?.shopName}</span>
                                 </div>
                                 <div className="flex gap-2">
                                     <span>Division:</span>
-                                    <span>Rajshahi</span>
+                                    <span>{seller?.shopInfo?.division}</span>
                                 </div>
                                 <div className="flex gap-2">
                                     <span>District:</span>
-                                    <span>Chapai</span>
+                                    <span>{seller?.shopInfo?.district}</span>
                                 </div>
                                 <div className="flex gap-2">
                                     <span>Upazila:</span>
-                                    <span>Chapai</span>
+                                    <span>{seller?.shopInfo?.sub_district}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <form >
+                    <form onSubmit={statusSubmit} >
                         <div className='flex gap-3 py-3'>
-                            <select className='bg-[#283046] border border-slate-700 px-4 py-2 rounded-md focus:outline-none focus:border-indigo-600 text-[#d0d2d6]' name="" id="">
-                                <option >--Select Option--</option>
+                            <select value={status} onChange={(e)=>setStatus(e.target.value)} className='bg-[#283046] border border-slate-700 px-4 py-2 rounded-md focus:outline-none focus:border-indigo-600 text-[#d0d2d6]' name="" required id=""   >
+                                <option value='' >--Select Option--</option>
                                 <option value="active">Active</option>
                                 <option value="deactive">Deactive</option>
                             </select>

@@ -14,7 +14,7 @@ const Products = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
-  const [parPage, setparPage] = useState(5);
+  const [parPage, setParPage] = useState(5);
 
   useEffect(() => {
     const obj = {
@@ -29,7 +29,7 @@ const Products = () => {
     <div className="px-2 lg:px-7 pt-5">
       <div className="w-full bg-[#283046] p-4 rounded-md">
         <Search
-          setparPage={setparPage}
+          setParPage={setParPage}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />

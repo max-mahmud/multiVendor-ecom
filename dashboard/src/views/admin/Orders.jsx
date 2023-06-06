@@ -6,14 +6,14 @@ import Pagination from '../Pagination';
 const Orders = () => {
     const [currentPage, setCurrentPage] = useState(1)
     // const [searchValue, setSearchValue] = useState('')
-    const [parPage, setparPage] = useState(5)
+    const [parPage, setParPage] = useState(5)
     const [downArrow, setDownArrow] = useState(false)
     return (
         <div className='px-2 lg:px-7 pt-5'>
             <div className="w-full bg-[#283046] p-4 rounded-md">
 
                 <div className="flex justify-between items-center">
-                    <select onChange={(e) => setparPage(parseInt(e.target.value))} className='bg-[#283046] border border-slate-700 px-4 py-2 rounded-md focus:outline-none focus:border-indigo-600 text-[#d0d2d6]' >
+                    <select onChange={(e) => setParPage(parseInt(e.target.value))} className='bg-[#283046] border border-slate-700 px-4 py-2 rounded-md focus:outline-none focus:border-indigo-600 text-[#d0d2d6]' >
                         <option value="5">5</option>
                         <option value="15">15</option>
                         <option value="5">25</option>
