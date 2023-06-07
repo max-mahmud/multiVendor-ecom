@@ -33,7 +33,7 @@ const [category, setCategory] = useState('')
             <ul className='flex justify-start items-center gap-8'>
               <li className='flex relative justify-center items-center gap-2 text-sm after:absolute after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px]'>
                 <span><MdEmail /></span>
-                <span>sheikhfarid@gmail.com</span>
+                <span>abc@gmail.com</span>
               </li>
               <span>Multi vendor ecommerce</span>
             </ul>
@@ -56,7 +56,7 @@ const [category, setCategory] = useState('')
                 {
                   user ? <Link className='flex cursor-pointer justify-center items-center gap-2 text-sm' to='/dashboard'>
                     <span><FaUser /></span>
-                    <span>Sheikh farid</span>
+                    <span>ABC</span>
                   </Link> : <div className='flex cursor-pointer justify-center items-center gap-2 text-sm'>
                     <span><FaLock /></span>
                     <span>Login</span>
@@ -227,7 +227,7 @@ const [category, setCategory] = useState('')
                                             }
                                         </select>
                                     </div>
-                                    <input className='w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full' onChange={(e) => setSearchValue(e.target.value)} type="text" name="" id="" placeholder='what do you need' />
+                                    <input className='w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full' onChange={(e) => setSearchValue(e.target.value)} type="text" name="" id="" placeholder='What do you need?' />
                                     <button className='bg-violet-400 right-0 absolute px-8 h-full font-semibold uppercase text-white'>Search</button>
                                 </div>
                             </div>
