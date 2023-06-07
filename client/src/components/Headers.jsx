@@ -205,7 +205,7 @@ const [category, setCategory] = useState('')
                                     {
                                         categorys.map((c, i) => {
                                             return (
-                                                <li key={i} className='flex justify-start items-center gap-2 px-[24px] py-[6px]'>
+                                                <li key={i+1} className='flex justify-start items-center gap-2 px-[24px] py-[6px]'>
                                                     <Link className='text-sm block'>{c}</Link>
                                                 </li>
                                             )
@@ -223,7 +223,7 @@ const [category, setCategory] = useState('')
                                         <select onChange={(e) => setCategory(e.target.value)} className='w-[150px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none' name="" id="">
                                             <option value="">Select category</option>
                                             {
-                                                categorys.map((c, i) => <option value={c}>{c}</option>)
+                                                categorys.map((c, i) => <option key={i+1} value={c}>{c}</option>)
                                             }
                                         </select>
                                     </div>
