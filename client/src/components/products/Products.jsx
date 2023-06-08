@@ -47,8 +47,8 @@ const Products = ({title}) => {
     return (
         <div className='flex gap-8 flex-col-reverse'>
             <Carousel
-                autoPlay={false}
-                infinite={false}
+                autoPlay={true}
+                infinite={true}
                 arrows={false}
                 responsive={responsive}
                 transitionDuration={500}
