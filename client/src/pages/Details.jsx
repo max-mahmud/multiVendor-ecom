@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Headers from './../components/Headers';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import Footer from './../components/Footer';
 import Carousel from 'react-multi-carousel'
@@ -15,6 +15,7 @@ import { Pagination } from "swiper";
 import Reviews from '../components/Reviews';
 
 const Details = () => {
+    const {slug} = useParams()
     const [image, setImage] = useState('')
     const [state, setState] = useState('reviews')
     const discount = 15

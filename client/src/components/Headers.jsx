@@ -4,9 +4,13 @@ import { IoIosCall } from "react-icons/io";
 import { AiFillHeart, AiFillShopping } from "react-icons/ai";
 import { BsTwitter, BsGithub, BsList } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { get_category, get_products } from "../store/Reducers/homeReducer";
 
-const Headers = ({categorys}) => {
+const Headers = () => {
+  const dispatch = useDispatch()
+  const { categorys, products } = useSelector(state => state.home)
   const { pathname } = useLocation()
   const [showShidebar, setShowShidebar] = useState(true);
   const [categoryShow, setCategoryShow] = useState(true)
@@ -14,6 +18,12 @@ const Headers = ({categorys}) => {
   const wishlist = 4
 const [searchValue, setSearchValue] = useState('')
 const [category, setCategory] = useState('')
+
+useEffect(() => {
+  dispatch(get_category())
+  dispatch(get_products())
+}, [])
+
   return (
     <div className='w-full bg-white'>
       <div className='header-top bg-[#eeeeee] md-lg:hidden'>

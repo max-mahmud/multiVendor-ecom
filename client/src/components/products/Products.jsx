@@ -4,12 +4,12 @@ import 'react-multi-carousel/lib/styles.css'
 import { Link } from 'react-router-dom'
 import {FiChevronRight,FiChevronLeft} from 'react-icons/fi'
 
-const Products = ({title}) => {
-    const products = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ]
+const Products = ({title, products}) => {
+    // const products = [
+    //     [1, 2, 3],
+    //     [4, 5, 6],
+    //     [7, 8, 9]
+    // ]
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -48,7 +48,7 @@ const Products = ({title}) => {
         <div className='flex gap-8 flex-col-reverse'>
             <Carousel
                 autoPlay={true}
-                infinite={true}
+                infinite={false}
                 arrows={false}
                 responsive={responsive}
                 transitionDuration={500}
@@ -60,11 +60,11 @@ const Products = ({title}) => {
                         return (
                             <div className='flex flex-col justify-start gap-2' key={i+1}>
                                 {
-                                    p.map(pl => <Link className='flex justify-start items-start' to='#' key={pl+1}>
-                                        <img className='w-[110px] h-[110px]' src={`http://localhost:3000/images/products/${pl}.webp`} alt="images" />
+                                    p.map((pl, i) => <Link className='flex justify-start items-start' to='#' key={i}>
+                                        <img className='w-[110px] h-[110px]' src={pl.images[0]} alt="images" />
                                         <div className='px-3 flex justify-start items-start gap-1 flex-col text-slate-600'>
-                                            <h2>Long Sleeve casua Shirt for Man</h2>
-                                            <span className='text-lg font-bold'>$565</span>
+                                            <h2>{pl.name}</h2>
+                                            <span className='text-lg font-bold'>${pl.price}</span>
                                         </div>
                                     </Link>)
                                 }
