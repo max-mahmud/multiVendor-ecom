@@ -6,23 +6,12 @@ import { BsTwitter, BsGithub, BsList } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
-const Headers = () => {
+const Headers = ({categorys}) => {
   const { pathname } = useLocation()
   const [showShidebar, setShowShidebar] = useState(true);
   const [categoryShow, setCategoryShow] = useState(true)
   const user = true;
   const wishlist = 4
-  const categorys = [
-    'Clothing',
-    'Sports',
-    'Phones',
-    'Laptops',
-    'Monitors',
-    'Tablets',
-    'Auido',
-    'Bags',
-    'Televisions'
-]
 const [searchValue, setSearchValue] = useState('')
 const [category, setCategory] = useState('')
   return (
@@ -201,12 +190,13 @@ const [category, setCategory] = useState('')
                                 <span className='pt-1'><MdOutlineKeyboardArrowDown /></span>
                             </div>
                             <div className={`${categoryShow ? 'h-0' : 'h-[400px]'} overflow-hidden transition-all md-lg:relative duration-400 absolute z-[99999] bg-white w-full border-x`}>
-                                <ul className='py-2 text-slate-600 font-medium'>
+                                <ul className='py-2 text-slate-600 font-medium h-full overflow-auto'>
                                     {
                                         categorys.map((c, i) => {
                                             return (
-                                                <li key={i+1} className='flex justify-start items-center gap-2 px-[24px] py-[6px]'>
-                                                    <Link className='text-sm block'>{c}</Link>
+                                                <li key={i} className='flex justify-start items-center gap-2 px-[24px] py-[6px]'>
+                                                  <img src={c.image} className="w-[32px] h-[32px] rounded-full overflow-hidden" alt={c.name} />
+                                                    <Link to={`/product/${c.slug}`} className='text-sm block'>{c.name}</Link>
                                                 </li>
                                             )
                                         })
@@ -220,10 +210,10 @@ const [category, setCategory] = useState('')
                             <div className='w-8/12 md-lg:w-full'>
                                 <div className='flex border h-[50px] items-center relative gap-5'>
                                     <div className='relative after:absolute after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px] md:hidden'>
-                                        <select onChange={(e) => setCategory(e.target.value)} className='w-[150px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none' name="" id="">
+                                        <select onChange={(e) => setCategory(e.target.value)} className='w-[150px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none py-3' name="" id="">
                                             <option value="">Select category</option>
                                             {
-                                                categorys.map((c, i) => <option key={i+1} value={c}>{c}</option>)
+                                                categorys.map((c, i) => <option className="text-slate-300 bg-gray-600" key={i+1} value={c}>{c.name}</option>)
                                             }
                                         </select>
                                     </div>

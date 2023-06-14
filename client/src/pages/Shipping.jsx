@@ -118,7 +118,7 @@ const Shipping = () => {
                                             [1, 2].map((p, i) => <div className='w-full flex flex-wrap'>
                                                 <div className='flex sm:w-full gap-2 w-7/12'>
                                                     <div className='flex gap-2 justify-start items-center'>
-                                                        <img className='w-[80px] h-[80px]' src={`http://localhost:3000/images/products/${i + 1}.webp`} alt="product image" />
+                                                        <img className='w-[80px] h-[80px]' src={`http://localhost:3000/images/products/${i + 1}.webp`} alt="product img" />
                                                         <div className='pr-4 text-slate-600'>
                                                             <h2 className='text-md'>Long Sleeve casua Shirt for Man</h2>
                                                             <span className='text-sm'>Brand : Easy</span>

@@ -2,18 +2,8 @@ import React from 'react'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import { Link } from 'react-router-dom'
-const Categorys = () => {
-    const categorys = [
-        'Clothing',
-        'Sports',
-        'Phones',
-        'Laptops',
-        'Monitors',
-        'Tablets',
-        'Auido',
-        'Bags',
-        'Televisions'
-    ]
+const Categorys = ({categorys}) => {
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -57,9 +47,9 @@ const Categorys = () => {
                 {
                     categorys.map((c, i) => <Link className='h-[185px] border block' key={i} to='#'>
                         <div className='w-full h-full relative p-3'>
-                            <img src={`http://localhost:3000/images/products/${i+1}.webp`} alt="img" />
+                            <img src={c.image} alt="img" />
                             <div className='absolute bottom-6 w-full mx-auto font-bold left-0 flex justify-center items-center'>
-                                <span className='py-[2px] px-6 bg-[#3330305d] text-white'>{c}</span>
+                                <span className='py-[2px] px-6 bg-[#3330305d] text-white'>{c.name}</span>
                             </div>
                         </div>
                     </Link>)
