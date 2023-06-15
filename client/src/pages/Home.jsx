@@ -6,14 +6,13 @@ import FeatureProducts from '../components/products/FeatureProducts'
 import Products from '../components/products/Products'
 import Footer from '../components/Footer'
 import { useDispatch, useSelector } from 'react-redux';
-import { get_category, get_products } from '../store/Reducers/homeReducer'
+import {  get_products } from '../store/Reducers/homeReducer'
 
 const Home = () => {
   const dispatch = useDispatch()
-  const { categorys, products, latest_product, topRated_product, discount_product } = useSelector(state => state.home)
+  const { latest_product, topRated_product, discount_product } = useSelector(state => state.home)
 
   useEffect(() => {
-    dispatch(get_category())
     dispatch(get_products())
   }, [])
 
@@ -23,7 +22,7 @@ const Home = () => {
       <Headers />
       <Banner />
       <div className="my-4">
-        <Categorys categorys={categorys} />
+        <Categorys  />
       </div>
       <div className="py-[45px]">
         <FeatureProducts />
